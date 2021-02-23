@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Photo Site</title>
+</head>
+
+
+<body>
+<center>
+  <div style="...">
+    <h1><u>Photos of Users with Comments</u></h1>
+  </div>
+  <br/>
+  <div>
+    <h2>Photos of <%= @user.first_name %> <%= @user.last_name %></h2>
+    <% @photos.each do |photo| %>
+
+<!--      <p><%#=image_tag(photo.file_name) %></p>-->
+      <p><%=image_tag("https://photositephotos.s3.amazonaws.com/"+photo.file_name) %></p>
+      <p> photo created at <%= photo.date_time %></p>
+
+      <% @comments.where("photo_id=?" ,photo.id).each do |comment| %>
+
+        <li> comment: <%= comment.comment_text %></li>
+        <li> created at: <%= comment.date_time %></li>
+        <li> posted by: <%= link_to display_name(comment.user_id), user_photos_path(comment.user_id) %></li>
+
+      <% end %>
+      </ul>
+      <br>
+      <br>
+    <%end%>
+  </div>
+</center>
+</body>
+</html>
